@@ -32,3 +32,32 @@
 #myTable tr.header, #myTable tr:hover {
     background-color: #f1f1f1;
 }
+
+#modal-dialog {
+    width: 100% !important;
+}
+
+.modalContent input {
+    border-radius: 3px !important;
+    background-color: #FBFAFA !important;
+    margin-bottom: 5px;
+}
+
+h5 {
+    font-weight: bold !important;
+    margin-bottom: 1px !important;
+    padding-top: 15px;
+}
+
+#btn-address {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#btn-company {
+    margin-bottom: 20px;
+}
+
+#cardAddress {
+    margin-bottom: 15px !important;
+}
