@@ -218,5 +218,72 @@
         <tbody id="myTable"></tbody>
       </table>
     </div>
+
+    <script>
+      let result = [];
+      function getData(data) {
+        //get the keys of json
+        let aux = Object.keys(data).map((i) => i);
+
+        let d = aux.map((e) => {
+          if (typeof data[e] == "object") getData(data[e]);
+          else {
+            result.push(data[e]);
+            return;
+          }
+        });
+        return;
+      }
+
+      $(document).ready(async function () {
+        $("#myInput").on("keyup", function () {
+          var value = $(this).val().toLowerCase();
+          $("#myTable tr").filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+          });
+        });
+
+        let data = await fetch("https://jsonplaceholder.typicode.com/users");
+        data = await data.json();
+        console.log(data);
+        let index = 1;
+        for (const e of data) {
+          let table = document.getElementById("myTable");
+          let row = table.insertRow(table.length);
+          let cell1 = row.insertCell(0);
+          let cell2 = row.insertCell(1);
+          let cell3 = row.insertCell(2);
+
+          //reset the array to get data from other user
+          result = [];
+          //get the values of each key in the user Json
+          getData(e);
+          console.log("final", result);
+
+          cell1.innerHTML =
+            '<a onclick="loadData(' +
+            index +
+            ')" data-toggle="modal" class="name" value="' +
+            result +
+            '" data-target="#exampleModal">' +
+            e.name +
+            "</a>";
+          cell2.innerHTML = e.email;
+          cell3.innerHTML = e.company.name;
+
+          index++;
+        }
+      });
+
+      function loadData(id) {
+        //$("#inputname").val($("#name").attr("value"));
+
+        let line = $(".name")[id - 1].getAttribute("value").split(",");
+
+        for (let index = 1; index < line.length; index++) {
+          if (index < 8 || index > 9) $("#input" + index).val(line[index]);
+        }
+      }
+    </script>
   </body>
 </html>
